@@ -1,13 +1,36 @@
 package biology.animal.mammal;
 
-public class Dog extends Mammal {
+import biology.animal.Pet;
+
+public class Dog extends Mammal implements Pet {
+
+    public final static String CATEGORY = "Dog";
 
     public Dog(){
         super();
     }
 
-    public Dog(String _name, int _age, int _weight){
-        super(_name, _age, _weight);
+    public Dog(String name, int age, double weight){
+        super(name, age, weight);
+    }
+
+    public void eat(int gram) {
+        if (gram > 1000)
+            weight += 0.2;
+    }
+
+    public void play() {
+
+    }
+
+    public boolean checkHealth() {
+        System.out.println("檢乘結果為健康");
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Category=" + CATEGORY + ", " + super.toString();
     }
 
 }

@@ -1,13 +1,21 @@
 package biology.animal.mammal;
 
-//import biology.animal.*;
+import biology.animal.*;
 
-public abstract class Mammal extends biology.animal.Animal {
+public abstract class Mammal extends Animal {
     public Mammal(){
         super();
     }
 
-    public Mammal(String _name, int _age, int _weight){
-        super(_name, _age, _weight);
+    public Mammal(String name, int age, double weight){
+        super(name, age, weight);
+    }
+
+    @Override
+    public abstract void eat(int gram);
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

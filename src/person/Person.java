@@ -8,6 +8,13 @@ public class Person {
     protected LocalDate birthday;
     protected String gender;
 
+    public Person() {
+        this.id = "unknown";
+        this.name = "unknown";
+        this.birthday = LocalDate.of(9999, 9, 9);
+        this.gender = "unknown";
+    }
+
     public Person(String id, String name, LocalDate birthday, String gender) {
         this.id = id;
         this.name = name;
@@ -33,11 +40,9 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "ID='" + id + '\'' +
-                ", Name='" + name + '\'' +
+        return  "ID='" + id +
+                ", Name=" + name +
                 ", Birthday=" + birthday +
-                ", Gender='" + gender + '\'' +
-                '}';
+                ", Gender=" + gender;
     }
 }

@@ -1,54 +1,47 @@
 package biology.animal;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public abstract class Animal {
-    public String name;
+    protected String name;
 
-    public int age;
+    protected int age;
 
-    public int weight;
+    protected double weight;
 
     public Animal() {
-        userInputVariable();
+
     }
 
-    public Animal(String _name, int _age, int _weight) {
-        name = _name;
-        age = _age;
-        weight = _weight;
+    public Animal(String name, int age, double weight) {
+        this.name = name;
+        this.age = age;
+        this.weight = weight;
     }
 
-    public void eat(int g) {
-        weight += g;
+    public String getName() {
+        return name;
     }
 
-    public void exercise(int minute) {
-        weight -= (minute / 60);
+    public int getAge() {
+        return age;
     }
 
-    public void showInformation() {
-        System.out.println("=====動物的資訊=====");
-        System.out.println("名子:" + name);
-
-        if (age >= 0)
-            System.out.println("年齡:" + age);
-        else
-            System.out.println("年齡未知");
-
-        System.out.println("體重(kg):" + ((double) (weight) / 1000.0));
+    public double getWeight() {
+        return weight;
     }
 
-    private void userInputVariable() {
-        Scanner scanner = new Scanner(System.in);
+    public abstract void eat(int gram);
 
-        System.out.print("輸入名稱:");
-        name = scanner.next();
+    public void sleep(int minute) {
+        System.out.println("正在睡覺");
+    }
 
-        System.out.print("輸入年齡:");
-        age = scanner.nextInt();
-
-        System.out.print("輸入體重(g):");
-        weight = scanner.nextInt();
+    @Override
+    public String toString() {
+        return  "Name=" + name +
+                ", Age=" + age +
+                ", Weight=" + weight;
     }
 }
