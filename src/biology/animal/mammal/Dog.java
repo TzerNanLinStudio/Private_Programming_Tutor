@@ -2,8 +2,9 @@ package biology.animal.mammal;
 
 import biology.animal.Pet;
 
-public class Dog extends Mammal implements Pet {
+import static java.lang.Math.*;
 
+public class Dog extends Mammal implements Pet {
     public final static String CATEGORY = "Dog";
 
     public Dog(){
@@ -16,21 +17,23 @@ public class Dog extends Mammal implements Pet {
 
     public void eat(int gram) {
         if (gram > 1000)
-            weight += 0.2;
+            weight += 0.5;
     }
 
-    public void play() {
-
+    public void play(int minute) {
+        if (minute > 60)
+            weight -= 0.3;
     }
 
     public boolean checkHealth() {
-        System.out.println("檢乘結果為健康");
-        return true;
+        if (random() > 0.05)
+            return true;
+        else
+            return false;
     }
 
     @Override
     public String toString() {
         return "Category=" + CATEGORY + ", " + super.toString();
     }
-
 }

@@ -1,9 +1,6 @@
 package biology.animal.mammal;
 
-import biology.animal.Pet;
-
 public class Lion extends Mammal {
-
     public final static String CATEGORY = "Lion";
 
     public Lion(){

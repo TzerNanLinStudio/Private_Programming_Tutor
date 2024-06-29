@@ -5,9 +5,11 @@ import biology.animal.mammal.*;
 import person.*;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class PetShop extends Shop {
-    protected ArrayList<Animal> petList;
+    protected ArrayList<Animal> petList; // todo
+    private Map<Animal, Integer> petPrices; // todo
     private int petCapacity;
 
     public PetShop(Manager manager, int petCapacity) {
@@ -79,7 +81,7 @@ public class PetShop extends Shop {
                     clientDoSomething(id);
                     break;
                 default:
-                    System.out.println("Error");
+                    System.out.println("無效選項");
                     break;
             }
         }
@@ -101,31 +103,40 @@ public class PetShop extends Shop {
         boolean useSystemFlag = true;
 
         while (useSystemFlag) {
-            System.out.print("操作選項[1. 查看目錄 2. 招聘員工 3. 開除員工 4. 增加寵物 5. 登出系統 6. 關閉系統]: ");
+            try {
+                System.out.print("操作選項[1.查看目錄 2.招聘員工 3.開除員工 4.增加寵物 5.登出系統 6.關閉系統]: ");
 
-            switch (scanner.nextInt()) {
-                case 1:
-                    System.out.println(toString());
-                    break;
-                case 2:
-                    System.out.println("招聘員工");
-                    break;
-                case 3:
-                    System.out.println("刪除員工");
-                    break;
-                case 4:
-                    addPet();
-                    break;
-                case 5:
-                    useSystemFlag = false;
-                    break;
-                case 6:
-                    useSystemFlag = false;
-                    openSystemFlag = false;
-                    break;
-                default:
-                    System.out.println("無效選項");
-                    break;
+                switch (scanner.nextInt()) {
+                    case 1:
+                        System.out.println(toString());
+                        break;
+                    case 2:
+                        System.out.println("輸入新進員工的資訊: ");
+                        addStaff();
+                        break;
+                    case 3:
+                        System.out.print("輸入離職員工的ID: ");
+                        deleteStaff(scanner.next());
+                        break;
+                    case 4:
+                        addPet();
+                        break;
+                    case 5:
+                        useSystemFlag = false;
+                        break;
+                    case 6:
+                        useSystemFlag = false;
+                        openSystemFlag = false;
+                        break;
+                    default:
+                        System.out.println("無效選項");
+                        break;
+                }
+            }
+            catch (Exception ex) {
+                System.out.println("例外狀態! 資訊: " + ex.getMessage());
+                System.out.println("系統刷新，請重新再輸入。");
+                scanner.nextLine(); // 清空输入缓冲区
             }
         }
 
@@ -136,63 +147,93 @@ public class PetShop extends Shop {
         boolean useSystemFlag = true;
 
         while (useSystemFlag) {
-            System.out.print("操作選項[1. 查看目錄 2. 餵食寵物 3. 登出系統]: ");
+            try {
+                System.out.print("操作選項[1.查看目錄 2.寵物餵食 3.寵物放風 4.寵物健檢 5.登出系統]: ");
 
-            switch (scanner.nextInt()) {
-                case 1:
-                    System.out.println(toString());
-                    break;
-                case 2:
-                    for (Animal pet : petList) {
-                        System.out.print("餵食" + pet.getName() + "多少公克飼料: ");
-                        pet.eat(scanner.nextInt());
-                    }
-                    break;
-                case 3:
-                    useSystemFlag = false;
-                    break;
-                default:
-                    System.out.println("無效選項");
-                    break;
+                switch (scanner.nextInt()) {
+                    case 1:
+                        System.out.println(toString());
+                        break;
+                    case 2:
+                        for (Animal pet : petList) {
+                            System.out.print(pet.getName() + "的餵食飼料公克數: ");
+                            pet.eat(scanner.nextInt());
+                        }
+                        break;
+                    case 3:
+                        for (Animal pet : petList) {
+                            System.out.print(pet.getName() + "的放風時間分鐘數: ");
+                            ((Pet)pet).play(scanner.nextInt());
+                        }
+                        break;
+                    case 4:
+                        for (Animal pet : petList) {
+                            System.out.println(pet.getName() + "是否健康: " + (((Pet)pet).checkHealth() ? "是" : "否"));
+                        }
+                        break;
+                    case 5:
+                        useSystemFlag = false;
+                        break;
+                    default:
+                        System.out.println("無效選項");
+                        break;
+                }
+            }
+            catch (Exception ex) {
+                System.out.println("例外狀態! 資訊: " + ex.getMessage());
+                System.out.println("系統刷新，請重新再輸入。");
+                scanner.nextLine(); // 清空输入缓冲区
             }
         }
     }
 
     private void clientDoSomething(String id) {
         boolean useSystemFlag = true;
-        Client client = new Client();
+        Client client = createClient();
 
         while (useSystemFlag) {
-            System.out.print("操作選項[1. 查看商店寵物目錄 2. 查看自己狀態 3. 購買寵物 4. 登出系統]: ");
+            try {
+                System.out.print("操作選項[1.查看商店目錄 2.查看個人資訊 3.購買寵物 4.登出系統]: ");
 
-            switch (scanner.nextInt()) {
-                case 1:
-                    for (int i = 0; i < petList.size(); i++) {
-                        System.out.println("No. " + i + " : " + petList.get(i).toString());
-                    }
-                    break;
-                case 2:
-                    System.out.println(client.toString());
-                    break;
-                case 3:
-                    System.out.print("輸入期望購買的寵物名稱: ");
-                    String name = scanner.next();
-
-                    for (Animal pet : petList) {
-                        if (name.equals(pet.getName())) {
-                            client.pay(20000);
-                            client.addPet(pet);
-                            deletePet(name);
-                            break;
+                switch (scanner.nextInt()) {
+                    case 1:
+                        for (int i = 0; i < petList.size(); i++) {
+                            System.out.println("No. " + i + " : " + petList.get(i).toString());
                         }
-                    }
-                    break;
-                case 4:
-                    useSystemFlag = false;
-                    break;
-                default:
-                    System.out.println("無效選項");
-                    break;
+                        break;
+                    case 2:
+                        System.out.println(client.toString());
+                        break;
+                    case 3:
+                        System.out.print("輸入期望購買的寵物名稱: ");
+                        String name = scanner.next();
+
+                        for (Animal pet : petList) {
+                            if (name.equals(pet.getName())) {
+                                if (client.pay(20000)){
+                                    System.out.println("交易成功!");
+                                    client.addPet(pet);
+                                    deletePet(name);
+                                }
+                                else {
+                                    System.out.println("交易失敗!");
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    case 4:
+                        useSystemFlag = false;
+                        break;
+                    default:
+                        System.out.println("無效選項");
+                        break;
+                }
+            }
+            catch (Exception ex) {
+                System.out.println("例外狀態! 資訊: " + ex.getMessage());
+                System.out.println("系統刷新，請重新再輸入。");
+                scanner.nextLine(); // 清空输入缓冲区
             }
         }
     }

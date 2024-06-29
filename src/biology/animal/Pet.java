@@ -1,6 +1,6 @@
 package biology.animal;
 
 public interface Pet {
-    void play();
+    void play(int minute);
     boolean checkHealth();
 }

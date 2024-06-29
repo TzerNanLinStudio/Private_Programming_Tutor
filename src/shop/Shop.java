@@ -18,7 +18,7 @@ public abstract class Shop {
         this.scanner = new Scanner(System.in);
     }
 
-    public boolean addStaff() {
+    protected Person createPerson() {
         System.out.print("輸入ID: ");
         String id = scanner.next();
 
@@ -37,7 +37,21 @@ public abstract class Shop {
         System.out.print("輸入性別:");
         String gender = scanner.next();
 
-        return addStaff( new Staff(id, name, LocalDate.of(year, month, day), gender));
+        return new Person(id, name, LocalDate.of(year, month, day), gender);
+    }
+
+    protected Client createClient(){
+        Person person = createPerson();
+        return new Client(person.getId(), person.getName(), person.getBirthday(), person.getGender());
+    }
+
+    protected Staff createStaff(){
+        Person person = createPerson();
+        return new Staff(person.getId(), person.getName(), person.getBirthday(), person.getGender());
+    }
+
+    public boolean addStaff() {
+        return addStaff(createStaff());
     }
 
     public boolean addStaff(Staff newStaff) {

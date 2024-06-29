@@ -2,8 +2,9 @@ package biology.animal.mammal;
 
 import biology.animal.Pet;
 
-public class Cat extends Mammal implements Pet{
+import static java.lang.Math.random;
 
+public class Cat extends Mammal implements Pet{
     public final static String CATEGORY = "Cat";
 
     public Cat(){
@@ -19,13 +20,16 @@ public class Cat extends Mammal implements Pet{
             weight += 0.1;
     }
 
-    public void play() {
-        System.out.println("正在玩樂");
+    public void play(int minute) {
+        if (minute > 90)
+            weight -= 0.1;
     }
 
     public boolean checkHealth() {
-        System.out.println("檢乘結果為健康");
-        return true;
+        if (random() > 0.1)
+            return true;
+        else
+            return false;
     }
 
     @Override

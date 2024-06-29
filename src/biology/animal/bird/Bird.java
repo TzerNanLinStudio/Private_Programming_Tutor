@@ -1,9 +1,9 @@
 package biology.animal.bird;
 
-public class Bird {
+public abstract class Bird {
 
     public Bird(){
-
+        // todo 鳥
     }
 
 }

@@ -3,6 +3,6 @@ package biology.animal.bird;
 public class Parrot extends Bird {
 
     public Parrot() {
-        // 鸚鵡
+        // todo 鸚鵡
     }
 }

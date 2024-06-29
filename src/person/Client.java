@@ -5,19 +5,21 @@ import biology.animal.Animal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import static java.lang.Math.*;
+
 public class Client extends Person{
     private int balance;
     private ArrayList<Animal> petList;
 
     public Client() {
         super();
-        balance = 1000000;
+        balance = Integer.MIN_VALUE;;
         petList = new ArrayList<>();
     }
 
     public Client(String id, String name, LocalDate birthday, String gender) {
         super(id, name, birthday, gender);
-        balance = 1000000;
+        balance = (int)(1000000.0 * random());
         petList = new ArrayList<>();
     }
 
@@ -26,8 +28,10 @@ public class Client extends Person{
             balance -= amount;
             return true;
         }
-
-        return false;
+        else {
+            System.out.println(getName() + "的存款不足!");
+            return false;
+        }
     }
 
     public void addPet(Animal newPet) {

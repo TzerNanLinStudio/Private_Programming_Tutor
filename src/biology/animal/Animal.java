@@ -1,8 +1,5 @@
 package biology.animal;
 
-import java.time.LocalDate;
-import java.util.Scanner;
-
 public abstract class Animal {
     protected String name;
 
@@ -11,7 +8,9 @@ public abstract class Animal {
     protected double weight;
 
     public Animal() {
-
+        this.name = "unknown";
+        this.age = Integer.MIN_VALUE;
+        this.weight = Double.MIN_VALUE;
     }
 
     public Animal(String name, int age, double weight) {
