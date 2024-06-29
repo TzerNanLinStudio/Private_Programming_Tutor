@@ -40,7 +40,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return  "ID='" + id +
+        return  "ID=" + id +
                 ", Name=" + name +
                 ", Birthday=" + birthday +
                 ", Gender=" + gender;

@@ -5,51 +5,64 @@ import biology.animal.mammal.*;
 import person.*;
 
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.HashMap;
 
 public class PetShop extends Shop {
-    protected ArrayList<Animal> petList; // todo
-    private Map<Animal, Integer> petPrices; // todo
     private int petCapacity;
+    protected ArrayList<Animal> petList;
+    private HashMap<Animal, Integer> petPrice;
 
     public PetShop(Manager manager, int petCapacity) {
         super(manager);
 
-        this.petList = new ArrayList<>();
         this.petCapacity = petCapacity;
-
+        this.petList = new ArrayList<>();
+        this.petPrice = new HashMap<>();
     }
 
     public void addPet() {
-        System.out.print("輸入物種[1.貓 2.狗]: ");
-        int category = scanner.nextInt();
+        if (petList.size() < petCapacity) {
+            System.out.print("輸入物種[1.貓 2.狗]: ");
+            int category = scanner.nextInt();
 
-        System.out.print("輸入名稱:");
-        String name = scanner.next();
+            System.out.print("輸入名稱:");
+            String name = scanner.next();
 
-        System.out.print("輸入年齡:");
-        int age = scanner.nextInt();
+            System.out.print("輸入年齡:");
+            int age = scanner.nextInt();
 
-        System.out.print("輸入體重:");
-        double weight = scanner.nextDouble();
+            System.out.print("輸入體重:");
+            double weight = scanner.nextDouble();
 
-        Animal newPet = null;
-        switch (category) {
-            case 1:
-                newPet = new Cat(name, age, weight);
-                break;
-            case 2:
-                newPet = new Dog(name, age, weight);
-                break;
-            default:
-                System.out.println("Error");
-                break;
+            System.out.print("輸入售價:");
+            int price = scanner.nextInt();
+
+            Animal pet = null;
+            switch (category) {
+                case 1:
+                    pet = new Cat(name, age, weight);
+                    break;
+                case 2:
+                    pet = new Dog(name, age, weight);
+                    break;
+                default:
+                    System.out.println("Error");
+                    break;
+            }
+            addPet(pet, price);
+        } else {
+            System.out.println("寵物商店空間已滿，無法新增寵物");
         }
-        petList.add(newPet);
     }
 
-    public void addPet(Animal newPet) {
-        petList.add(newPet);
+    public void addPet(Animal pet, int price) {
+        if (petList.size() < petCapacity){
+            petList.add(pet);
+            petPrice.put(pet, price);
+        }
+        else {
+            System.out.println("寵物商店空間已滿，無法新增寵物");
+        }
     }
 
     public void deletePet(String name) {
@@ -63,7 +76,7 @@ public class PetShop extends Shop {
 
     public void runSystem(){
         MainLoop: while (true){
-            System.out.print("\n請登陸寵物店系統\n請輸入ID: ");
+            System.out.print("\n請登陸寵物商店系統\n請輸入ID: ");
             String id = scanner.next();
 
             switch (VerifyID(id)) {
@@ -104,7 +117,7 @@ public class PetShop extends Shop {
 
         while (useSystemFlag) {
             try {
-                System.out.print("操作選項[1.查看目錄 2.招聘員工 3.開除員工 4.增加寵物 5.登出系統 6.關閉系統]: ");
+                System.out.print("操作選項[1.查看目錄 2.招聘員工 3.開除員工 4.新增寵物 5.登出系統 6.關閉系統]: ");
 
                 switch (scanner.nextInt()) {
                     case 1:
@@ -198,7 +211,7 @@ public class PetShop extends Shop {
                 switch (scanner.nextInt()) {
                     case 1:
                         for (int i = 0; i < petList.size(); i++) {
-                            System.out.println("No. " + i + " : " + petList.get(i).toString());
+                            System.out.println("No." + i + " : " + petList.get(i).toString() + ", Price=" + petPrice.get(petList.get(i)) + " }");
                         }
                         break;
                     case 2:
@@ -210,7 +223,7 @@ public class PetShop extends Shop {
 
                         for (Animal pet : petList) {
                             if (name.equals(pet.getName())) {
-                                if (client.pay(20000)){
+                                if (client.pay(petPrice.get(pet))){
                                     System.out.println("交易成功!");
                                     client.addPet(pet);
                                     deletePet(name);
@@ -245,7 +258,7 @@ public class PetShop extends Shop {
         str += super.toString();
 
         for (int i = 0; i < petList.size(); i++) {
-            str += "Pet " + i + " is { " + petList.get(i).toString() + " }\n";
+            str += "Pet " + i + " is { " + petList.get(i).toString() + ", Price=" + petPrice.get(petList.get(i)) + " }\n";
         }
 
         return str;
