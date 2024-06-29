@@ -1,6 +1,5 @@
 package shop;
 
-import biology.animal.Animal;
 import person.*;
 
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public abstract class Shop {
         System.out.print("輸入性別:");
         String gender = scanner.next();
 
-        return new Person(id, name, LocalDate.of(year, month, day), gender);
+        return new Person(id, name, new int[]{year, month, day}, gender);
     }
 
     protected Client createClient(){

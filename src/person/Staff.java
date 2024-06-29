@@ -1,19 +1,17 @@
 package person;
 
-import java.time.LocalDate;
+import static java.lang.Math.*;
 
 public class Staff extends Person {
-
     private int salary;
 
     public Staff() {
         super();
-        salary = 40000;
+        salary = Integer.MIN_VALUE;
     }
 
-    public Staff(String id, String name, LocalDate birthday, String gender) {
+    public Staff(String id, String name, int[] birthday, String gender) {
         super(id, name, birthday, gender);
-        salary = 40000;
+        salary = 40000 +  (int)(20000.0 * random());
     }
-
 }
